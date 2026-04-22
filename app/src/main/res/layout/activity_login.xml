@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="48dp">
+
+        <!-- App Icon -->
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_github"
+            android:contentDescription="GitLinked Logo" />
+
+        <!-- App Name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/app_name"
+            android:textColor="@color/textPrimary"
+            android:textSize="36sp"
+            android:fontFamily="sans-serif-bold"
+            android:letterSpacing="0.05" />
+
+        <!-- Tagline -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/login_subtitle"
+            android:textColor="@color/textSecondary"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Sign in Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_github_login"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/sign_in_github"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-medium"
+            app:icon="@drawable/ic_github"
+            app:iconTint="@color/white"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:cornerRadius="14dp"
+            app:backgroundTint="@color/buttonPrimary"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+        <!-- Skip / Demo mode -->
+        <TextView
+            android:id="@+id/btn_skip_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Continue without login (Demo)"
+            android:textColor="@color/accentCyan"
+            android:textSize="14sp"
+            android:padding="8dp" />
+
+        <!-- Loading -->
+        <ProgressBar
+            android:id="@+id/progress_login"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"
+            android:indeterminateTint="@color/accentCyan" />
+    </LinearLayout>
+
+    <!-- Version info -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="v1.0 · Built with ❤️"
+        android:textColor="@color/textTertiary"
+        android:textSize="12sp" />
+</FrameLayout>

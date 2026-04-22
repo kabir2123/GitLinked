@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="3dp">
+
+    <!-- Sent message (right aligned) -->
+    <LinearLayout
+        android:id="@+id/layout_sent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:maxWidth="280dp">
+
+        <TextView
+            android:id="@+id/tv_sent_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_sent"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_sent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/textTertiary"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <!-- Received message (left aligned) -->
+    <LinearLayout
+        android:id="@+id/layout_received"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:gravity="start"
+        android:maxWidth="280dp">
+
+        <TextView
+            android:id="@+id/tv_received_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_received"
+            android:padding="12dp"
+            android:textColor="@color/textPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_received_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/textTertiary"
+            android:textSize="10sp" />
+    </LinearLayout>
+</FrameLayout>

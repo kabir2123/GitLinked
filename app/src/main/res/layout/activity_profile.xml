@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryDark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Back button + Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryDarkLight"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:src="@android:drawable/ic_menu_revert"
+                android:padding="8dp"
+                android:contentDescription="Back" />
+
+            <!-- Avatar -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile_avatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="8dp"
+                app:civ_border_width="3dp"
+                app:civ_border_color="@color/accentCyan" />
+
+            <!-- Username -->
+            <TextView
+                android:id="@+id/tv_profile_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/textPrimary"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-bold" />
+
+            <!-- Bio -->
+            <TextView
+                android:id="@+id/tv_profile_bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:gravity="center" />
+
+            <!-- Match Percentage (shown when viewing another user) -->
+            <LinearLayout
+                android:id="@+id/layout_match"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_match_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="32sp"
+                    android:fontFamily="sans-serif-bold"
+                    android:textColor="@color/matchHigh" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text=" Match"
+                    android:textSize="16sp"
+                    android:textColor="@color/textSecondary" />
+            </LinearLayout>
+
+            <!-- Match summary -->
+            <TextView
+                android:id="@+id/tv_match_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/accentCyan"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:id="@+id/layout_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_connect"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="@string/connect"
+                android:textAllCaps="false"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/buttonPrimary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_message"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/message"
+                android:textAllCaps="false"
+                android:textColor="@color/accentCyan"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/accentCyan" />
+        </LinearLayout>
+
+        <!-- Languages Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/languages"
+                android:textColor="@color/textPrimary"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_languages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginHorizontal="16dp" />
+
+        <!-- Repositories Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repositories"
+                android:textColor="@color/textPrimary"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium" />
+
+            <LinearLayout
+                android:id="@+id/layout_repos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <!-- View on GitHub -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_view_github"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:text="@string/view_on_github"
+            android:textColor="@color/accentCyan"
+            android:textAllCaps="false"
+            app:icon="@drawable/ic_github"
+            app:iconTint="@color/accentCyan" />
+    </LinearLayout>
+</ScrollView>

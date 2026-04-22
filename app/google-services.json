@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461986680120",
+    "project_id": "gitlinked",
+    "storage_bucket": "gitlinked.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461986680120:android:7a62e41ef39462f48a05cd",
+        "android_client_info": {
+          "package_name": "com.example.gitlinked"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByDLwegcvKg885qs3ew5Im571q_mkgE5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

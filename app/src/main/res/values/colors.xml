@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Dark Theme Palette -->
+    <color name="primaryDark">#FF0D1117</color>
+    <color name="primaryDarkLight">#FF161B22</color>
+    <color name="surfaceDark">#FF21262D</color>
+    <color name="surfaceDarkElevated">#FF30363D</color>
+
+    <!-- Accent Colors -->
+    <color name="accentCyan">#FF58A6FF</color>
+    <color name="accentGreen">#FF3FB950</color>
+    <color name="accentPurple">#FFD2A8FF</color>
+    <color name="accentOrange">#FFD29922</color>
+    <color name="accentRed">#FFFF7B72</color>
+    <color name="accentPink">#FFFF9BBB</color>
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#FFF0F6FC</color>
+    <color name="textSecondary">#FF8B949E</color>
+    <color name="textTertiary">#FF6E7681</color>
+
+    <!-- Borders & Dividers -->
+    <color name="border">#FF30363D</color>
+    <color name="divider">#FF21262D</color>
+
+    <!-- Match Score Colors -->
+    <color name="matchHigh">#FF3FB950</color>
+    <color name="matchMedium">#FFD29922</color>
+    <color name="matchLow">#FFFF7B72</color>
+
+    <!-- Message Bubbles -->
+    <color name="messageSent">#FF1F6FEB</color>
+    <color name="messageReceived">#FF30363D</color>
+
+    <!-- Status Colors -->
+    <color name="online">#FF3FB950</color>
+    <color name="offline">#FF6E7681</color>
+
+    <!-- Background Gradient -->
+    <color name="gradientStart">#FF0D1117</color>
+    <color name="gradientEnd">#FF161B22</color>
+
+    <!-- Button Colors -->
+    <color name="buttonPrimary">#FF1F6FEB</color>
+    <color name="buttonPrimaryPressed">#FF1A5CC7</color>
+    <color name="buttonSecondary">#FF21262D</color>
+
+    <!-- Chip/Tag Colors -->
+    <color name="chipBackground">#FF1F2937</color>
+    <color name="chipText">#FF58A6FF</color>
+
+    <!-- Legacy required -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+</resources>

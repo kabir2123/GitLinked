@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitLinked</string>
+    <string name="app_tagline">Connect with developers nearby</string>
+
+    <!-- Login -->
+    <string name="sign_in_github">Sign in with GitHub</string>
+    <string name="login_subtitle">Discover developers around you.\nConnect. Collaborate. Build.</string>
+    <string name="logging_in">Authenticating…</string>
+
+    <!-- Navigation -->
+    <string name="nav_nearby">Nearby</string>
+    <string name="nav_jobs">Jobs</string>
+    <string name="nav_events">Events</string>
+    <string name="nav_chats">Chats</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Nearby -->
+    <string name="scanning">Scanning for developers…</string>
+    <string name="scan_complete">Scan complete</string>
+    <string name="no_developers_found">No developers found nearby</string>
+    <string name="pull_to_refresh">Pull to refresh</string>
+    <string name="start_scan">Start Scan</string>
+    <string name="match_label">%d%% Match</string>
+    <string name="developers_nearby">Developers Nearby</string>
+
+    <!-- Profile -->
+    <string name="repositories">Repositories</string>
+    <string name="languages">Languages</string>
+    <string name="interests">Interests</string>
+    <string name="connect">Send Invite</string>
+    <string name="invite_sent">📩 Invite Sent</string>
+    <string name="accept_invite">Accept Invite</string>
+    <string name="connected">✓ Connected</string>
+    <string name="message">Message</string>
+    <string name="view_on_github">View on GitHub</string>
+    <string name="stars">⭐ %d</string>
+    <string name="forks">🍴 %d</string>
+
+    <!-- Chat -->
+    <string name="type_message">Type a message…</string>
+    <string name="send">Send</string>
+    <string name="encrypted_badge">🔒 End-to-end encrypted</string>
+    <string name="no_messages">No messages yet. Say hello!</string>
+
+    <!-- Jobs -->
+    <string name="job_listings">Job Listings</string>
+    <string name="filter_all">All</string>
+    <string name="filter_fulltime">Full-time</string>
+    <string name="filter_freelance">Freelance</string>
+    <string name="filter_gig">Gig</string>
+    <string name="apply_now">Apply Now</string>
+    <string name="posted_on">Posted %s</string>
+
+    <!-- Events -->
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="check_in">Check In</string>
+    <string name="checked_in">✓ Checked In</string>
+    <string name="attendees">%d Attendees</string>
+
+    <!-- Map -->
+    <string name="developer_heatmap">Developer Heatmap</string>
+    <string name="loading_map">Loading map…</string>
+
+    <!-- General -->
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
+
+    <!-- Permissions -->
+    <string name="bluetooth_permission_needed">Bluetooth permission is required to discover nearby developers</string>
+    <string name="location_permission_needed">Location permission is required for the heatmap feature</string>
+</resources>

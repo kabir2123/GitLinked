@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Theme - Dark GitHub-inspired -->
+    <style name="Theme.GitLinked" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/accentCyan</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accentCyan</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/primaryDark</item>
+        <item name="android:windowBackground">@color/primaryDark</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/primaryDark</item>
+        <item name="android:navigationBarColor">@color/primaryDarkLight</item>
+
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+
+        <!-- Surface -->
+        <item name="colorSurface">@color/surfaceDark</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+
+        <!-- Ripple -->
+        <item name="android:colorControlHighlight">#2258A6FF</item>
+    </style>
+
+    <!-- Login Theme - with gradient background -->
+    <style name="Theme.GitLinked.Login" parent="Theme.GitLinked">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <!-- Splash / Transparent -->
+    <style name="Theme.GitLinked.Splash" parent="Theme.GitLinked">
+        <item name="android:windowBackground">@color/primaryDark</item>
+    </style>
+</resources>

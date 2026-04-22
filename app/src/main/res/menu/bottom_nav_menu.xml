@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_nearby"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="@string/nav_nearby"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_jobs"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/nav_jobs"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_events"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="@string/nav_events"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_chats"
+        android:icon="@android:drawable/ic_menu_send"
+        android:title="@string/nav_chats"
+        app:showAsAction="ifRoom" />
+</menu>
