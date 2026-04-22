@@ -4,6 +4,7 @@ import android.bluetooth.le.ScanResult;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,9 @@ import com.google.firebase.database.ChildEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Fragment showing nearby developers with a proximity radar visualization.
@@ -56,6 +59,7 @@ public class NearbyFragment extends Fragment {
     private String currentUserId;
     private RadarView radarView;
     private BLEScanner bleScanner;
+    private Set<String> discoveredUserIds = new HashSet<>();
 
     @Nullable
     @Override
@@ -129,6 +133,7 @@ public class NearbyFragment extends Fragment {
         loadDevelopers(tvScanStatus, swipeRefresh);
 
         swipeRefresh.setOnRefreshListener(() -> {
+            discoveredUserIds.clear();
             startBleScan();
             loadDevelopers(tvScanStatus, swipeRefresh);
         });
@@ -136,6 +141,7 @@ public class NearbyFragment extends Fragment {
         View fab = view.findViewById(R.id.fab_scan);
         if (fab != null) {
             fab.setOnClickListener(v -> {
+                discoveredUserIds.clear();
                 startBleScan();
                 loadDevelopers(tvScanStatus, swipeRefresh);
             });
@@ -149,11 +155,14 @@ public class NearbyFragment extends Fragment {
     private void handleBleDeviceFound(ScanResult result, String userId) {
         if (userId == null || userId.equals(currentUserId)) return;
 
+        discoveredUserIds.add(userId);
+
         User user = userDao.getUserById(userId);
         if (user == null) {
             user = new User();
             user.setId(userId);
             user.setUsername(userId); // Fallback to ID as username initially
+            user.setBio("Discovered via Radar");
         }
         user.setBleDeviceAddress(result.getDevice().getAddress());
         user.setOnline(true);
@@ -284,9 +293,20 @@ public class NearbyFragment extends Fragment {
         List<User> allUsers = userDao.getAllUsers();
         matchResults.clear();
 
-        for (User user : allUsers) {
-            if (user.getId().equals(currentUserId)) continue;
-            matchResults.add(MatchUtils.calculateMatch(currentUser, user));
+        // If we have discovered users via radar, prioritize showing them
+        if (!discoveredUserIds.isEmpty()) {
+            for (String userId : discoveredUserIds) {
+                User user = userDao.getUserById(userId);
+                if (user != null) {
+                    matchResults.add(MatchUtils.calculateMatch(currentUser, user));
+                }
+            }
+        } else {
+            // Fallback to all users if nothing discovered yet (or for mock demo)
+            for (User user : allUsers) {
+                if (user.getId().equals(currentUserId)) continue;
+                matchResults.add(MatchUtils.calculateMatch(currentUser, user));
+            }
         }
 
         Collections.sort(matchResults, (a, b) ->

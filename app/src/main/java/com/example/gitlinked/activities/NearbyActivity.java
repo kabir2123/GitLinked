@@ -257,7 +257,7 @@ public class NearbyActivity extends AppCompatActivity {
 
         scanner.setScanListener(new BLEScanner.ScanListener() {
             @Override
-            public void onDeviceFound(android.bluetooth.le.ScanResult result) {
+            public void onDeviceFound(android.bluetooth.le.ScanResult result, String userId) {
                 processDiscoveredDevice(result);
                 runOnUiThread(() -> {
                     tvScanStatus.setText("Scanning... Found " + bleDiscoveredUserIds.size() + " developers");

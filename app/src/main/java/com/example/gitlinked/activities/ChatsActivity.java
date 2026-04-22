@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Shows all conversations, pending invites, sent requests, and group chats.
+ * Now also shows developers discovered via radar.
  */
 public class ChatsActivity extends AppCompatActivity {
 
@@ -92,6 +92,31 @@ public class ChatsActivity extends AppCompatActivity {
 
     private void loadChatsAndInvites() {
         layoutContent.removeAllViews();
+
+        // --- Section 0: Discovered Nearby (via Radar) ---
+        List<User> allUsers = userDao.getAllUsers();
+        List<User> discoveredNearby = new ArrayList<>();
+        for (User u : allUsers) {
+            if (u.getId().equals(currentUserId)) continue;
+            
+            // Check if they are already connected or invited
+            ConnectionRequest conn = connectionDao.getConnectionBetween(currentUserId, u.getId());
+            if (conn != null) continue; // Already handled in other sections
+
+            // Check if they were discovered via BLE (has address or was marked as discovered)
+            if ((u.getBleDeviceAddress() != null && !u.getBleDeviceAddress().isEmpty()) 
+                || (u.getBio() != null && u.getBio().contains("Discovered via"))) {
+                discoveredNearby.add(u);
+            }
+        }
+
+        if (!discoveredNearby.isEmpty()) {
+            addSectionHeader("📡 Discovered Nearby");
+            for (User u : discoveredNearby) {
+                addDiscoveredItem(u);
+            }
+            addDivider();
+        }
 
         // --- Section 1: Pending invites received ---
         List<ConnectionRequest> pendingInvites = connectionDao.getPendingInvitesFor(currentUserId);
@@ -170,7 +195,7 @@ public class ChatsActivity extends AppCompatActivity {
         }
 
         // Empty state
-        if (pendingInvites.isEmpty() && accepted.isEmpty() && sentPending.isEmpty() && groups.isEmpty()) {
+        if (discoveredNearby.isEmpty() && pendingInvites.isEmpty() && accepted.isEmpty() && sentPending.isEmpty() && groups.isEmpty()) {
             addEmptyState();
         }
     }
@@ -193,10 +218,6 @@ public class ChatsActivity extends AppCompatActivity {
         connectionsListener = null;
     }
 
-    /**
-     * Show dialog to create a group chat.
-     * Lists all accepted connections as checkboxes.
-     */
     private void showCreateGroupDialog() {
         List<ConnectionRequest> allConns = connectionDao.getAllConnectionsFor(currentUserId);
         List<ConnectionRequest> accepted = new ArrayList<>();
@@ -210,19 +231,16 @@ public class ChatsActivity extends AppCompatActivity {
             return;
         }
 
-        // Build dialog with checkboxes
         LinearLayout dialogLayout = new LinearLayout(this);
         dialogLayout.setOrientation(LinearLayout.VERTICAL);
         dialogLayout.setPadding(48, 24, 48, 12);
 
-        // Group name input
         EditText etGroupName = new EditText(this);
         etGroupName.setHint("Group name");
         etGroupName.setTextColor(getResources().getColor(R.color.textPrimary, null));
         etGroupName.setHintTextColor(getResources().getColor(R.color.textTertiary, null));
         dialogLayout.addView(etGroupName);
 
-        // Spacer
         TextView tvLabel = new TextView(this);
         tvLabel.setText("Select members:");
         tvLabel.setTextSize(14);
@@ -230,7 +248,6 @@ public class ChatsActivity extends AppCompatActivity {
         tvLabel.setPadding(0, 24, 0, 8);
         dialogLayout.addView(tvLabel);
 
-        // Checkboxes for each connected user
         List<CheckBox> checkboxes = new ArrayList<>();
         List<String> userIds = new ArrayList<>();
 
@@ -238,7 +255,6 @@ public class ChatsActivity extends AppCompatActivity {
             String otherUserId = conn.getFromUserId().equals(currentUserId)
                     ? conn.getToUserId() : conn.getFromUserId();
 
-            // Skip duplicates
             if (userIds.contains(otherUserId)) continue;
             userIds.add(otherUserId);
 
@@ -280,7 +296,6 @@ public class ChatsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Group '" + groupName + "' created! 🎉",
                             Toast.LENGTH_SHORT).show();
 
-                    // Open the new group chat
                     Intent intent = new Intent(this, GroupChatActivity.class);
                     intent.putExtra("group_id", groupId);
                     startActivity(intent);
@@ -311,10 +326,61 @@ public class ChatsActivity extends AppCompatActivity {
         layoutContent.addView(divider);
     }
 
+    private void addDiscoveredItem(User user) {
+        LinearLayout item = createItemLayout();
+
+        CircleImageView avatar = createAvatar(user.getAvatarUrl(), R.color.accentCyan);
+        item.addView(avatar);
+
+        LinearLayout textLayout = createTextLayout();
+        textLayout.addView(createNameText(user.getUsername()));
+
+        TextView tvStatus = new TextView(this);
+        tvStatus.setText("Discovered nearby");
+        tvStatus.setTextSize(12);
+        tvStatus.setTextColor(getResources().getColor(R.color.accentCyan, null));
+        textLayout.addView(tvStatus);
+
+        item.addView(textLayout);
+
+        // Connect Button
+        com.google.android.material.button.MaterialButton btnConnect =
+                new com.google.android.material.button.MaterialButton(this);
+        btnConnect.setText("Connect");
+        btnConnect.setTextSize(11);
+        btnConnect.setAllCaps(false);
+        btnConnect.setMinimumWidth(0);
+        btnConnect.setMinWidth(0);
+        btnConnect.setPadding(24, 0, 24, 0);
+        LinearLayout.LayoutParams btnParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, 96);
+        btnConnect.setLayoutParams(btnParams);
+        btnConnect.setBackgroundColor(getResources().getColor(R.color.buttonPrimary, null));
+        
+        btnConnect.setOnClickListener(v -> {
+            // Send invite
+            connectionDao.sendRequest(currentUserId, user.getId());
+            if (realtimeRepository.isAvailable()) {
+                realtimeRepository.sendConnectionRequest(currentUserId, user.getId(), (success, error) -> { });
+            }
+            
+            // Open Chat directly (as requested)
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra(Constants.EXTRA_USER_ID, user.getId());
+            intent.putExtra(Constants.EXTRA_USERNAME, user.getUsername());
+            intent.putExtra(Constants.EXTRA_AVATAR_URL, user.getAvatarUrl());
+            startActivity(intent);
+            
+            Toast.makeText(this, "Connecting with " + user.getUsername() + "...", Toast.LENGTH_SHORT).show();
+        });
+        
+        item.addView(btnConnect);
+        layoutContent.addView(item);
+    }
+
     private void addGroupChatItem(GroupChat group, String lastMessage, String time) {
         LinearLayout item = createItemLayout();
 
-        // Group icon
         TextView icon = new TextView(this);
         icon.setText("👥");
         icon.setTextSize(28);
@@ -323,7 +389,6 @@ public class ChatsActivity extends AppCompatActivity {
         icon.setGravity(android.view.Gravity.CENTER);
         item.addView(icon);
 
-        // Text
         LinearLayout textLayout = createTextLayout();
 
         TextView tvName = createNameText(group.getName());
@@ -399,7 +464,6 @@ public class ChatsActivity extends AppCompatActivity {
 
         item.addView(textLayout);
 
-        // Accept button
         com.google.android.material.button.MaterialButton btnAccept =
                 new com.google.android.material.button.MaterialButton(this);
         btnAccept.setText("Accept");
@@ -427,7 +491,6 @@ public class ChatsActivity extends AppCompatActivity {
         });
         item.addView(btnAccept);
 
-        // Decline
         com.google.android.material.button.MaterialButton btnDecline =
                 new com.google.android.material.button.MaterialButton(this);
         btnDecline.setText("✕");
@@ -505,8 +568,6 @@ public class ChatsActivity extends AppCompatActivity {
         layoutContent.addView(emptyLayout);
     }
 
-    // ==================== Helper Builders ====================
-
     private LinearLayout createItemLayout() {
         LinearLayout item = new LinearLayout(this);
         item.setOrientation(LinearLayout.HORIZONTAL);
@@ -533,6 +594,8 @@ public class ChatsActivity extends AppCompatActivity {
         avatar.setBorderColor(getResources().getColor(borderColorRes, null));
         if (url != null && !url.isEmpty()) {
             Glide.with(this).load(url).circleCrop().into(avatar);
+        } else {
+            avatar.setImageResource(R.drawable.bg_circle_avatar);
         }
         return avatar;
     }

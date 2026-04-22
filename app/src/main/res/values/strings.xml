@@ -28,7 +28,7 @@
     <string name="repositories">Repositories</string>
     <string name="languages">Languages</string>
     <string name="interests">Interests</string>
-    <string name="connect">Send Invite</string>
+    <string name="connect">Connect</string>
     <string name="invite_sent">📩 Invite Sent</string>
     <string name="accept_invite">Accept Invite</string>
     <string name="connected">✓ Connected</string>

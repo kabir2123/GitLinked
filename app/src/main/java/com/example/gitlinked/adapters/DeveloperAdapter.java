@@ -1,6 +1,7 @@
 package com.example.gitlinked.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
 
         // Common languages
         String matchSummary = match.getMatchSummary();
-        holder.tvMatchSummary.setText(matchSummary.isEmpty() ? "Tap to view profile" : matchSummary);
+        holder.tvMatchSummary.setText(matchSummary.isEmpty() ? "Discovered nearby" : matchSummary);
 
         // Online status
         holder.viewOnlineStatus.setVisibility(
@@ -83,6 +84,8 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
                     .circleCrop()
                     .placeholder(R.drawable.bg_circle_avatar)
                     .into(holder.imgAvatar);
+        } else {
+            holder.imgAvatar.setImageResource(R.drawable.bg_circle_avatar);
         }
 
         // Update button text based on connection status
@@ -105,13 +108,15 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
         ConnectionRequest conn = connectionDao.getConnectionBetween(currentUserId, otherUserId);
 
         if (conn == null) {
-            button.setText("Invite");
+            button.setText("Connect");
             button.setEnabled(true);
             button.setAlpha(1f);
+            button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.buttonPrimary)));
         } else if (conn.isAccepted()) {
             button.setText("Chat");
             button.setEnabled(true);
             button.setAlpha(1f);
+            button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.accentCyan)));
         } else if (conn.isPending()) {
             if (conn.getFromUserId().equals(currentUserId)) {
                 button.setText("Sent");
@@ -121,6 +126,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
                 button.setText("Accept");
                 button.setEnabled(true);
                 button.setAlpha(1f);
+                button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.buttonPrimary)));
             }
         }
     }
